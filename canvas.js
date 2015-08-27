@@ -8,6 +8,34 @@ function drawBorder () {
 }
 drawBorder();
 
+// creates circles
+function circles () {
+  var randomCenterX = Math.floor(Math.random() * size.x);
+  var randomCenterY = Math.floor(Math.random() * size.y);
+  var randomSize = Math.floor(Math.random() * 100);
+
+  context.beginPath();
+  context.arc(
+    randomCenterX,
+    randomCenterY,
+    randomSize,
+    0,
+    2 * Math.PI
+  );
+  context.fillStyle = getRandomColor();
+  context.fill();
+}
+
+// random color generator
+function getRandomColor () {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 // adds blue box in top left on single click
 canvas.onclick = function () {
   context.fillStyle = 'blue';
@@ -28,6 +56,7 @@ var greenButton = document.getElementById('green');
 var blueButton = document.getElementById('blue');
 var orangeButton = document.getElementById('orange');
 var clearButton = document.getElementById('clear');
+var randomButton = document.getElementById('random');
 // ----------------- //
 // ** END BUTTONS ** //
 // ----------------- //
@@ -35,7 +64,7 @@ var clearButton = document.getElementById('clear');
 // ------------------- //
 // BUTTON CLICK EVENTS //
 // ------------------- //
-// randomly generated coordinates
+// randomly generated coordinates and size
 // must fire on each click
 var randomX, randomY, randomWidth, randomHeight;
 
@@ -77,6 +106,21 @@ orangeButton.onclick = function () {
 
   context.fillStyle = 'orange';
   context.fillRect(randomX, randomY, randomWidth, randomHeight);
+};
+
+randomButton.onclick = function () {
+  var shape = Math.floor(Math.random() * 2);
+  randomX = Math.floor(Math.random() * size.x);
+  randomY = Math.floor(Math.random() * size.y);
+  randomWidth = Math.floor(Math.random() * (size.x / 2));
+  randomHeight = Math.floor(Math.random() * (size.y / 2));
+
+  context.fillStyle = getRandomColor();
+  if (shape === 1) {
+    circles();
+  } else {
+    context.fillRect(randomX, randomY, randomWidth, randomHeight);
+  }
 };
 
 clearButton.onclick = function () {
