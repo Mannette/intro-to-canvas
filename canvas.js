@@ -8,6 +8,10 @@ function drawBorder () {
 }
 drawBorder();
 
+// ------ //
+// SHAPES //
+// ------ //
+
 // creates rectangles
 function rectangles () {
   randomX = Math.floor(Math.random() * size.x);
@@ -41,6 +45,50 @@ function circles () {
   context.fillStyle = getRandomColor();
   context.fill();
 }
+
+// creates triangles
+function triangles () {
+  randomX = Math.floor(Math.random() * size.x);
+  randomY = Math.floor(Math.random() * size.y);
+  var firstVrtxX = Math.floor(Math.random() * size.x);
+  var firstVrtxY = Math.floor(Math.random() * size.y);
+  var secondVrtxX = Math.floor(Math.random() * size.x);
+  var secondVrtxY = Math.floor(Math.random() * size.y);
+
+  context.beginPath();
+  context.moveTo(randomX, randomY);
+  context.lineTo(firstVrtxX, firstVrtxY);
+  context.lineTo(secondVrtxX, secondVrtxY);
+  context.closePath();
+
+  context.fillStyle = getRandomColor();
+  context.fill();
+}
+// creates diamonds
+function diamonds () {
+  randomX = Math.floor(Math.random() * size.x);
+  randomY = Math.floor(Math.random() * size.y);
+  var firstVrtxX = Math.floor(Math.random() * size.x);
+  var firstVrtxY = Math.floor(Math.random() * size.y);
+  var secondVrtxX = Math.floor(Math.random() * size.x);
+  var secondVrtxY = Math.floor(Math.random() * size.y);
+  var thirdVrtxX = Math.floor(Math.random() * size.x);
+  var thirdVrtxY = Math.floor(Math.random() * size.y);
+
+  context.beginPath();
+  context.moveTo(randomX, randomY);
+  context.lineTo(firstVrtxX, firstVrtxY);
+  context.lineTo(secondVrtxX, secondVrtxY);
+  context.lineTo(thirdVrtxX, thirdVrtxY);
+  context.closePath();
+
+  context.fillStyle = getRandomColor();
+  context.fill();
+}
+
+// ---------------- //
+// ** END SHAPES ** //
+// ---------------- //
 
 // random color generator
 function getRandomColor () {
@@ -131,7 +179,6 @@ randomButton.onclick = function () {
   randomWidth = Math.floor(Math.random() * (size.x / 2));
   randomHeight = Math.floor(Math.random() * (size.y / 2));
 
-  // context.fillStyle = getRandomColor();
   if (shape === 1) {
     circles();
   } else {
@@ -154,72 +201,22 @@ document.onkeydown = function (e) {
 
     // draws rectangle
     case 82:
-      randomX = Math.floor(Math.random() * size.x);
-      randomY = Math.floor(Math.random() * size.y);
-      randomWidth = Math.floor(Math.random() * (size.x / 2));
-      randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-      context.fillStyle = getRandomColor();
-      context.fillRect(randomX, randomY, randomWidth, randomHeight);
+      rectangles();
       break;
 
     // draws circle
     case 67:
-      var randomCenterX = Math.floor(Math.random() * size.x);
-      var randomCenterY = Math.floor(Math.random() * size.y);
-      var randomSize = Math.floor(Math.random() * 100);
-
-      context.beginPath();
-      context.arc(
-        randomCenterX,
-        randomCenterY,
-        randomSize,
-        0,
-        2 * Math.PI
-      );
-      context.fillStyle = getRandomColor();
-      context.fill();
+      circles();
       break;
 
     // draws triangle
     case 84:
-      randomX = Math.floor(Math.random() * size.x);
-      randomY = Math.floor(Math.random() * size.y);
-      var firstVrtxX = Math.floor(Math.random() * size.x);
-      var firstVrtxY = Math.floor(Math.random() * size.y);
-      var secondVrtxX = Math.floor(Math.random() * size.x);
-      var secondVrtxY = Math.floor(Math.random() * size.y);
-
-      context.beginPath();
-      context.moveTo(randomX, randomY);
-      context.lineTo(firstVrtxX, firstVrtxY);
-      context.lineTo(secondVrtxX, secondVrtxY);
-      context.closePath();
-
-      context.fillStyle = getRandomColor();
-      context.fill();
+      triangles();
       break;
 
     // draws diamond
     case 68:
-      randomX = Math.floor(Math.random() * size.x);
-      randomY = Math.floor(Math.random() * size.y);
-      var firstVrtxX = Math.floor(Math.random() * size.x);
-      var firstVrtxY = Math.floor(Math.random() * size.y);
-      var secondVrtxX = Math.floor(Math.random() * size.x);
-      var secondVrtxY = Math.floor(Math.random() * size.y);
-      var thirdVrtxX = Math.floor(Math.random() * size.x);
-      var thirdVrtxY = Math.floor(Math.random() * size.y);
-
-      context.beginPath();
-      context.moveTo(randomX, randomY);
-      context.lineTo(firstVrtxX, firstVrtxY);
-      context.lineTo(secondVrtxX, secondVrtxY);
-      context.lineTo(thirdVrtxX, thirdVrtxY);
-      context.closePath();
-
-      context.fillStyle = getRandomColor();
-      context.fill();
+      diamonds();
       break;
 
     default: return;
