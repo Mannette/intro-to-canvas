@@ -117,6 +117,10 @@ function diamonds () {
 // FIBONACCI FUNCTIONS //
 // ------------------- //
 
+  ////////////////
+  /// SEQUENCE ///
+  ////////////////
+
 var rowNumber, rowLength;
 
 // draws individual block
@@ -136,6 +140,8 @@ function drawRow (rowNumber, rowLength, color) {
     drawPixel(rowNumber, i, color);
   }
 }
+
+// function to determine fibonacci sequence
 function fibSequence (x) {
   if (x === 0) {
     return 0;
@@ -146,13 +152,167 @@ function fibSequence (x) {
   }
 }
 
-//
+// draws fibonacci sequence
 function drawFibonacci () {
   for (rowNumber = 0; rowNumber < 15; rowNumber++) {
     rowLength = fibSequence(rowNumber);
     drawRow(rowNumber, rowLength, getRandomColor());
   }
 }
+
+  ////////////////////
+  /// END SEQUENCE ///
+  ////////////////////
+
+  ////////////////////////
+  /// FIBONACCI SPIRAL ///
+  ////////////////////////
+
+function fibSpiral () {
+  context.clearRect(0, 0, size.x, size.y);
+  drawBorder();
+  context.fillStyle = '#000000'
+
+  // define number of circles
+  var circles = 100;
+
+  // define golden ratio and angle
+  var phi = Math.sqrt(5) / 2 - 1;
+  var goldenAng = phi * 2 * Math.PI;
+
+  // define central coordinates
+  var centerX = size.x / 2;
+  var centerY = size.y / 2;
+  var outerRadius = size.x * 0.45;
+  // var angleInc = (2 + (frameNumber) / 12) * Math.PI / 180;
+
+  var smRadius = 2;
+
+  for (var i = 1; i <= circles; i++) {
+    var ratio = i / circles;
+    var angle = i * goldenAng;
+    var spiralRadius = ratio * outerRadius;
+    var x = centerX + Math.cos(angle) * spiralRadius;
+    var y = centerY + Math.sin(angle) * spiralRadius;
+
+    context.beginPath();
+    context.arc(
+      x,
+      y,
+      smRadius,
+      0,
+      2 * Math.PI,
+      false
+    );
+    context.fill();
+  }
+}
+
+  //////////////////
+  /// END SPIRAL ///
+  //////////////////
+
+  ////////////////////////
+  /// SUNFLOWER SPIRAL ///
+  ////////////////////////
+
+  function sunflower (frameNumber) {
+    context.clearRect(0, 0, size.x, size.y);
+    drawBorder();
+    /**
+     * will aid in determining area of circles
+     * smaller numbers yields smaller circles as cirlces move inward
+     */
+    var deviation = 6 / 7;
+
+    /**
+     * aid in determining amount/size of circles
+     * higher numbers yield smaller/more circles
+     */
+    var circles = 1000;
+
+    // golden ratio
+    var phi = (Math.sqrt(5) + 1) / 2 - 1;
+    // golden angle
+    var goldenAng = phi * 2 * Math.PI;
+
+    // set max radius
+    var lrgRadius = size.x * 0.45;
+    // set area for large circles
+    var lrgArea = Math.pow(lrgRadius, 2) * Math.PI;
+
+    // define an average area
+    var avgArea = lrgArea / circles;
+
+    // define a min and max area
+    var minArea = avgArea * (1 - deviation);
+    var maxArea = avgArea * (1 + deviation);
+
+    // define an area
+    var area = 0;
+
+    // factor to account for empty space
+    var spaceFactor = 0.87;
+
+    // define central x/y coordinates
+    var centerX = size.x / 2;
+    var centerY = size.y / 2;
+
+    // define incrimentation for hue
+    var hueIncr = frameNumber * 0.0002 + 0.1;
+    var angleOffset = frameNumber * 0.01;
+
+    // loop to create circles in spiral
+    for (var i = 1; i <= circles; i++) {
+      context.beginPath();
+
+      // aids in determining decreasing circle area
+      var ratio = i / circles;
+      // define area for smallest circles
+      var smArea = minArea + ratio * (maxArea - minArea);
+      // define radius for smallest circles
+      var smRadius = Math.sqrt(smArea / Math.PI);
+
+      // determines area for all circles
+      area += smArea;
+
+      // defines radius for spiral
+      var spiralRadius = Math.sqrt(area / Math.PI);
+      // defines x/y coordinates for circles along a curve
+      var x = centerX + Math.cos(i * goldenAng + angleOffset) * spiralRadius;
+      var y = centerY + Math.sin(i * goldenAng + angleOffset) * spiralRadius;
+
+      // set alternating hue
+      var hue = hueIncr * i;
+      hue -= Math.floor(hue);
+      hue *= 360;
+
+      context.fillStyle = 'hsl(' + hue + ', 80%, 50%)';
+
+      // draw the circles
+      context.arc(
+        x,
+        y,
+        smRadius * spaceFactor,
+        0,
+        2 * Math.PI,
+        false
+      );
+      // fill the circles
+      context.fill();
+      // setInterval(
+      //   function () {
+      //     context.
+      //   },
+      // 1000);
+    }
+
+  }
+
+  /////////////////////
+  /// END SUNFLOWER ///
+  /////////////////////
+
 // ------------------- //
 // ** END FIBONACCI ** //
 // ------------------- //
@@ -168,6 +328,8 @@ var orangeButton = document.getElementById('orange');
 var clearButton = document.getElementById('clear');
 var randomButton = document.getElementById('random');
 var fibButton = document.getElementById('fib');
+var spiralButton = document.getElementById('fibSpiral');
+var sunflowerButton = document.getElementById('sunflower');
 
 // ----------------- //
 // ** END BUTTONS ** //
@@ -181,6 +343,7 @@ var fibButton = document.getElementById('fib');
 // must fire on each click
 var randomX, randomY, randomWidth, randomHeight;
 
+// creates red rectangle
 redButton.onclick = function () {
   randomX = Math.floor(Math.random() * size.x);
   randomY = Math.floor(Math.random() * size.y);
@@ -191,6 +354,7 @@ redButton.onclick = function () {
   context.fillRect(randomX, randomY, randomWidth, randomHeight);
 };
 
+// creates green rectangle
 greenButton.onclick = function () {
   randomX = Math.floor(Math.random() * size.x);
   randomY = Math.floor(Math.random() * size.y);
@@ -201,6 +365,7 @@ greenButton.onclick = function () {
   context.fillRect(randomX, randomY, randomWidth, randomHeight);
 };
 
+// creates blue rectangle
 blueButton.onclick = function () {
   randomX = Math.floor(Math.random() * size.x);
   randomY = Math.floor(Math.random() * size.y);
@@ -211,6 +376,7 @@ blueButton.onclick = function () {
   context.fillRect(randomX, randomY, randomWidth, randomHeight);
 };
 
+// creates orange rectangle
 orangeButton.onclick = function () {
   randomX = Math.floor(Math.random() * size.x);
   randomY = Math.floor(Math.random() * size.y);
@@ -221,6 +387,7 @@ orangeButton.onclick = function () {
   context.fillRect(randomX, randomY, randomWidth, randomHeight);
 };
 
+// randomly creates cirlces/rectangles
 randomButton.onclick = function () {
   var shape = Math.floor(Math.random() * 2);
   randomX = Math.floor(Math.random() * size.x);
@@ -235,10 +402,25 @@ randomButton.onclick = function () {
   }
 };
 
+// fibonacci sequence
 fibButton.onclick = function () {
+  context.clearRect(0, 0, size.x, size.y);
+  drawBorder();
   drawFibonacci();
 };
 
+// fibonacci spiral
+spiralButton.onclick = function () {
+  console.log('test')
+  fibSpiral();
+};
+
+// fibonacci spiral in nature
+sunflowerButton.onclick = function () {
+  sunflower(144);
+};
+
+// clear canvas
 clearButton.onclick = function () {
   context.clearRect(0, 0, size.x, size.y);
   drawBorder();
