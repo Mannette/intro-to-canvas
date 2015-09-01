@@ -165,6 +165,40 @@ function drawFibonacci () {
   /// END SEQUENCE ///
   ////////////////////
 
+  //////////////////////
+  /// FIBONACCI DOTS ///
+  //////////////////////
+function fibDots () {
+  var phi = (Math.sqrt(5) +1) / 2;
+  var goldenAng = phi * 2 * Math.PI;
+  var circles = 200;
+
+  var largeRad = size.x * 0.45;
+  var smallRad = pixelSize;
+  var centerX = size.x / 2;
+  var centerY = size.y / 2;
+
+  for (var i = 0; i < circles; i++) {
+    context.beginPath();
+    var ratio = i / circles;
+    var angle = i * goldenAng;
+    var spiralRad = ratio * largeRad;
+    var x = centerX + Math.cos(angle) * spiralRad;
+    var y = centerY + Math.sin(angle) * spiralRad;
+    context.arc(
+      x,
+      y,
+      smallRad,
+      0,
+      2 * Math.PI
+    );
+    context.fill();
+  }
+}
+  ////////////////
+  /// END DOTS ///
+  ////////////////
+
   ////////////////////
   /// TORUS DESIGN ///
   ////////////////////
@@ -176,7 +210,7 @@ function torus () {
   context.fillStyle = '#000000';
 
   // define number of circles
-  var circles = 500;
+  var circles = 600;
 
   // define golden ratio and angle
   var phi = (Math.sqrt(5) + 1) / 2;
@@ -191,7 +225,7 @@ function torus () {
   var toIncrease = 0;
   var test = setInterval(
               loop,
-              175
+              82
             );
 
   function loop (i) {
@@ -794,6 +828,7 @@ var fibButton = document.getElementById('fib');
 var torusButton = document.getElementById('torus');
 var sunflowerButton = document.getElementById('sunflower');
 var spiralButton = document.getElementById('fibSpiral');
+var dotsButton = document.getElementById('dots');
 
 // ----------------- //
 // ** END BUTTONS ** //
@@ -886,6 +921,11 @@ spiralButton.onclick = function () {
 // fibonacci spiral in nature
 sunflowerButton.onclick = function () {
   sunflowerFrame();
+};
+
+// fibonacci dots
+dotsButton.onclick = function () {
+  fibDots();
 };
 
 // clear canvas
