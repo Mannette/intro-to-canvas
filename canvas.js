@@ -172,10 +172,11 @@ function drawFibonacci () {
 function torus () {
   context.clearRect(0, 0, size.x, size.y);
   drawBorder();
+  context.strokeStyle = '#000000';
   context.fillStyle = '#000000';
 
   // define number of circles
-  var circles = 250;
+  var circles = 500;
 
   // define golden ratio and angle
   var phi = (Math.sqrt(5) + 1) / 2;
@@ -190,7 +191,7 @@ function torus () {
   var toIncrease = 0;
   var test = setInterval(
               loop,
-              250
+              175
             );
 
   function loop (i) {
@@ -271,64 +272,15 @@ function fibSpiral (frameNumber) {
   var cotB = (Math.log(phi)) / (Math.PI / 2);
 
   fibSquares();
-  // spirals();
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + pixelSize,
-    (size.y / 2) + pixelSize,
-    pixelSize,
-    3 * Math.PI / 2,
-    Math.PI,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + pixelSize + (pixelSize / phi),
-    (size.y / 2) + pixelSize,
-    pixelSize * phi,
-    Math.PI,
-    Math.PI / 2,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + (2 * pixelSize / phi),
-    (size.y / 2),
-    pixelSize * Math.pow(phi, 2),
-    Maht.PI / 2,
-    0,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2),
-    (size.y / 2),
-    pixelSize * Math.pow(phi, 3),
-    0,
-    3 * Math.PI / 2,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2),
-    (size.y / 2),
-    pixelSize * Math.pow(phi, 4),
-    3 * Math.PI / 2,
-    Math.PI,
-    true
-  );
-  context.stroke();
+  // fillSquares();
+  spirals();
 }
+
 function fibSquares () {
   var phi = (Math.sqrt(5) + 1) / 2;
   context.lineWidth = '1';
-  // for (var i = 0; i < 5; i++) {
-  //   context.strokeRect((size.x / 2) + (Math.pow(phi, i)), (size.y / 2) + (Math.pow(phi, i)), pixelSize * i * phi, pixelSize * i * phi);
-  // }
+  context.strokeStyle = '#000000';
+
   context.strokeRect(
     (size.x / 2) + pixelSize,
     size.y / 2,
@@ -402,37 +354,323 @@ function fibSquares () {
     pixelSize * Math.pow(phi, 10)
   );
 }
+
+// function fillSquares () {
+//   context.fillStyle = '#4a67ff';
+//   var phi = (Math.sqrt(5) + 1) / 2;
+//
+//   context.fillRect(
+//     (size.x / 2) + pixelSize,
+//     size.y / 2,
+//     pixelSize / phi,
+//     pixelSize
+//   );
+//   context.fillRect(
+//     size.x / 2,
+//     size.y / 2,
+//     pixelSize,
+//     pixelSize
+//   );
+//   context.fillRect(
+//     size.x / 2,
+//     (size.y / 2) + pixelSize,
+//     pixelSize * phi,
+//     pixelSize * phi
+//   );
+//   context.fillRect(
+//     ((size.x / 2) + pixelSize + (pixelSize / phi)),
+//     size.y / 2,
+//     pixelSize * Math.pow(phi, 2),
+//     pixelSize * Math.pow(phi, 2)
+//   );
+//   context.fillRect(
+//     size.x / 2,
+//     (size.y / 2) - ((pixelSize * phi) + (pixelSize * Math.pow(phi, 2))),
+//     pixelSize * Math.pow(phi, 3),
+//     pixelSize * Math.pow(phi, 3)
+//   );
+//   context.fillRect(
+//     (size.x / 2) - pixelSize * Math.pow(phi, 4),
+//     (size.y / 2) - pixelSize * Math.pow(phi, 3),
+//     pixelSize * Math.pow(phi, 4),
+//     pixelSize * Math.pow(phi, 4)
+//   );
+//   context.fillRect(
+//     (size.x / 2) - (pixelSize * Math.pow(phi, 4)),
+//     (size.y / 2) + pixelSize * Math.pow(phi, 2),
+//     pixelSize * Math.pow(phi, 5),
+//     pixelSize * Math.pow(phi, 5)
+//   );
+//   context.fillRect(
+//     (size.x / 2) + pixelSize * Math.pow(phi, 3),
+//     (size.y / 2) - pixelSize * Math.pow(phi, 3),
+//     pixelSize * Math.pow(phi, 6),
+//     pixelSize * Math.pow(phi, 6)
+//   );
+//   context.fillRect(
+//     (size.x / 2) - pixelSize * Math.pow(phi, 4),
+//     (size.y / 2) - (pixelSize * Math.pow(phi, 7) + pixelSize * Math.pow(phi, 3)),
+//     pixelSize * Math.pow(phi, 7),
+//     pixelSize * Math.pow(phi, 7)
+//   );
+//   context.fillRect(
+//     (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
+//     (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
+//     pixelSize * Math.pow(phi, 8),
+//     pixelSize * Math.pow(phi, 8)
+//   );
+//   context.fillRect(
+//     (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
+//     (size.y / 2) + (pixelSize * Math.pow(phi, 2) + pixelSize * Math.pow(phi, 5)),
+//     pixelSize * Math.pow(phi, 9),
+//     pixelSize * Math.pow(phi, 9)
+//   );
+//   context.fillRect(
+//     (size.x / 2) + (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 6)),
+//     (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
+//     pixelSize * Math.pow(phi, 10),
+//     pixelSize * Math.pow(phi, 10)
+//   );
+// }
+
+//
+
 function spirals () {
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + pixelSize,
-    (size.y / 2) + pixelSize,
-    pixelSize,
-    3 * Math.PI / 2,
-    Math.PI,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + pixelSize + (pixelSize / phi),
-    (size.y / 2) + pixelSize,
-    pixelSize * phi,
-    Math.PI,
-    Math.PI / 2,
-    true
-  );
-  context.stroke();
-  context.beginPath();
-  context.arc(
-    (size.x / 2) + (2 * pixelSize / phi),
-    (size.y / 2),
-    pixelSize * Math.pow(phi, 2),
-    Maht.PI / 2,
-    0,
-    true
-  );
-  context.stroke();
+  var phi = (Math.sqrt(5) + 1) / 2;
+  context.lineWidth = '1';
+  context.strokeStyle = '#0a007d';
+
+  function firstArc () {
+    var i = 3 * Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + pixelSize,
+        (size.y / 2) + pixelSize,
+        pixelSize,
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI) {
+        window.clearInterval(interval);
+        secondArc();
+      }
+    }, 1);
+  }
+  firstArc();
+
+  function secondArc () {
+    var i = Math.PI;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + pixelSize + (pixelSize / phi),
+        (size.y / 2) + pixelSize,
+        pixelSize * phi,
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI / 2) {
+        window.clearInterval(interval);
+        thirdArc();
+      }
+    }, 1);
+  }
+
+  function thirdArc () {
+    var i = Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + (pixelSize * phi),
+        (size.y / 2),
+        pixelSize * Math.pow(phi, 2),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= 0) {
+        window.clearInterval(interval);
+        fourthArc();
+      }
+    }, 1);
+  }
+
+  function fourthArc () {
+    var i = 2 * Math.PI;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2),
+        (size.y / 2),
+        pixelSize * Math.pow(phi, 3),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= (3 * Math.PI / 2)) {
+        window.clearInterval(interval);
+        fifthArc();
+      }
+    }, 5);
+  }
+
+  function fifthArc () {
+    var i = 3 * Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2),
+        (size.y / 2) + (pixelSize * Math.pow(phi, 2)),
+        pixelSize * Math.pow(phi, 4),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI) {
+        window.clearInterval(interval);
+        sixthArc();
+      }
+    }, 5);
+  }
+
+  function sixthArc () {
+    var i = Math.PI;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + (pixelSize * Math.pow(phi, 3)),
+        (size.y / 2) + (pixelSize * Math.pow(phi, 2)),
+        pixelSize * Math.pow(phi, 5),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI / 2) {
+        window.clearInterval(interval);
+        seventhArc();
+      }
+    }, 5);
+  }
+
+  function seventhArc () {
+    var i = Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + (pixelSize * Math.pow(phi, 3)),
+        (size.y / 2) - (pixelSize * Math.pow(phi, 3)),
+        pixelSize * Math.pow(phi, 6),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= 0) {
+        window.clearInterval(interval);
+        eighthArc();
+      }
+    }, 10);
+  }
+
+  function eighthArc () {
+    var i = 2 * Math.PI;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) - (pixelSize * Math.pow(phi, 4)),
+        (size.y / 2) - (pixelSize * Math.pow(phi, 3)),
+        pixelSize * Math.pow(phi, 7),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= 3 * Math.PI / 2) {
+        window.clearInterval(interval);
+        ninthArc();
+      }
+    }, 10);
+  }
+
+  function ninthArc () {
+    var i = 3 * Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) - (pixelSize * Math.pow(phi, 4)),
+        (size.y / 2) + (pixelSize * Math.pow(phi, 2) + pixelSize * Math.pow(phi, 5)),
+        pixelSize * Math.pow(phi, 8),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI) {
+        window.clearInterval(interval);
+        tenthArc();
+      }
+    }, 10);
+  }
+
+  function tenthArc () {
+    var i = Math.PI;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + (pixelSize * Math.pow(phi, 6) + pixelSize * Math.pow(phi, 3)),
+        (size.y / 2) + (pixelSize * Math.pow(phi, 2) + pixelSize * Math.pow(phi, 5)),
+        pixelSize * Math.pow(phi, 9),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI / 2) {
+        window.clearInterval(interval);
+        lastArc();
+      }
+    }, 15);
+  }
+
+  function lastArc () {
+    var i = Math.PI / 2;
+    var interval = window.setInterval(function () {
+      context.beginPath();
+      context.arc(
+        (size.x / 2) + (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 6)),
+        (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
+        pixelSize * Math.pow(phi, 10),
+        i,
+        i - Math.PI / 1000,
+        true
+      );
+      context.stroke();
+      i -= Math.PI / 1000;
+      if (i <= Math.PI / 1000) {
+        window.clearInterval(interval);
+        // call next curve
+      }
+    }, 15);
+  }
 }
   //////////////////
   /// END SPIRAL ///
@@ -637,7 +875,6 @@ fibButton.onclick = function () {
 
 // torus spiral
 torusButton.onclick = function () {
-  console.log('test')
   torus();
 };
 
