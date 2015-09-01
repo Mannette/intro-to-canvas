@@ -1,11 +1,12 @@
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var size = { x: canvas.width, y: canvas.height };
-var pixelSize = canvas.width / 100;
+var pixelSize = 5;
+var incriment = 0;
 
 // draws border
 function drawBorder () {
-  context.strokeRect(0, 0, size.x, size.y);
+  context.strokeRect(0, 0, canvas.width, canvas.height);
 }
 drawBorder();
 
@@ -164,50 +165,275 @@ function drawFibonacci () {
   /// END SEQUENCE ///
   ////////////////////
 
-  ////////////////////////
-  /// FIBONACCI SPIRAL ///
-  ////////////////////////
+  ////////////////////
+  /// TORUS DESIGN ///
+  ////////////////////
 
-function fibSpiral () {
+function torus () {
   context.clearRect(0, 0, size.x, size.y);
   drawBorder();
-  context.fillStyle = '#000000'
+  context.fillStyle = '#000000';
 
   // define number of circles
-  var circles = 100;
+  var circles = 250;
 
   // define golden ratio and angle
-  var phi = Math.sqrt(5) / 2 - 1;
+  var phi = (Math.sqrt(5) + 1) / 2;
+  // var phi = Math.sqrt(5) / 2 - 1;
   var goldenAng = phi * 2 * Math.PI;
 
   // define central coordinates
   var centerX = size.x / 2;
   var centerY = size.y / 2;
   var outerRadius = size.x * 0.45;
-  // var angleInc = (2 + (frameNumber) / 12) * Math.PI / 180;
 
-  var smRadius = 2;
+  var toIncrease = 0;
+  var test = setInterval(
+              loop,
+              250
+            );
 
-  for (var i = 1; i <= circles; i++) {
-    var ratio = i / circles;
-    var angle = i * goldenAng;
-    var spiralRadius = ratio * outerRadius;
-    var x = centerX + Math.cos(angle) * spiralRadius;
-    var y = centerY + Math.sin(angle) * spiralRadius;
+  function loop (i) {
+    i = toIncrease++;
+    // var ratio = i / circles;
+    // var angle = i * goldenAng;
+    // var spiralRadius = ratio * outerRadius;
+    // var x = centerX + Math.cos(angle) * spiralRadius;
+    // var y = centerY + Math.sin(angle) * spiralRadius;
+    var startPoint = findCoordinates(circles, i);
+    var endPoint = findCoordinates(circles, i+1);
+
+    // console.log(startPoint);
+    // console.log(endPoint);
+    //
+    // context.beginPath();
+    // context.arc(
+    //   x,
+    //   y,
+    //   2,
+    //   0,
+    //   2 * Math.PI
+    // );
+    // context.fill();
 
     context.beginPath();
+    context.moveTo(startPoint.x, startPoint.y);
     context.arc(
-      x,
-      y,
-      smRadius,
+      startPoint.x,
+      startPoint.y,
+      2,
       0,
       2 * Math.PI,
-      false
+      true
     );
-    context.fill();
+    context.lineTo(endPoint.x, endPoint.y);
+    context.stroke();
+    // context.fill();
+    if (i > circles) {
+      clearInterval(test);
+    }
   }
 }
 
+function findCoordinates (circles, i) {
+  // define golden ratio and angle
+  var phi = (Math.sqrt(5) + 1) / 2;
+  var goldenAng = phi * 2 * Math.PI;
+  // define central coordinates
+  var centerX = size.x / 2;
+  var centerY = size.y / 2;
+  var outerRadius = size.x * 0.45;
+
+  var ratio = i / circles;
+  var angle = i * goldenAng;
+  var spiralRadius = ratio * outerRadius;
+  var x = centerX + Math.cos(angle) * spiralRadius;
+  var y = centerY + Math.sin(angle) * spiralRadius;
+
+  var coordinates = {x: x, y: y};
+  return coordinates;
+}
+
+  /////////////////
+  /// END TORUS ///
+  /////////////////
+
+  ////////////////////////
+  /// FIBONACCI SPIRAL ///
+  ////////////////////////
+function fibSpiral (frameNumber) {
+  context.clearRect(0, 0, size.x, size.y);
+  drawBorder();
+  context.fillStyle = '#000000';
+  var centerX = size.x / 2;
+  var centerY = size.y / 2;
+  var phi = (Math.sqrt(5) + 1) / 2;
+  var cotB = (Math.log(phi)) / (Math.PI / 2);
+
+  fibSquares();
+  // spirals();
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + pixelSize,
+    (size.y / 2) + pixelSize,
+    pixelSize,
+    3 * Math.PI / 2,
+    Math.PI,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + pixelSize + (pixelSize / phi),
+    (size.y / 2) + pixelSize,
+    pixelSize * phi,
+    Math.PI,
+    Math.PI / 2,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + (2 * pixelSize / phi),
+    (size.y / 2),
+    pixelSize * Math.pow(phi, 2),
+    Maht.PI / 2,
+    0,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2),
+    (size.y / 2),
+    pixelSize * Math.pow(phi, 3),
+    0,
+    3 * Math.PI / 2,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2),
+    (size.y / 2),
+    pixelSize * Math.pow(phi, 4),
+    3 * Math.PI / 2,
+    Math.PI,
+    true
+  );
+  context.stroke();
+}
+function fibSquares () {
+  var phi = (Math.sqrt(5) + 1) / 2;
+  context.lineWidth = '1';
+  // for (var i = 0; i < 5; i++) {
+  //   context.strokeRect((size.x / 2) + (Math.pow(phi, i)), (size.y / 2) + (Math.pow(phi, i)), pixelSize * i * phi, pixelSize * i * phi);
+  // }
+  context.strokeRect(
+    (size.x / 2) + pixelSize,
+    size.y / 2,
+    pixelSize / phi,
+    pixelSize
+  );
+  context.strokeRect(
+    size.x / 2,
+    size.y / 2,
+    pixelSize,
+    pixelSize
+  );
+  context.strokeRect(
+    size.x / 2,
+    (size.y / 2) + pixelSize,
+    pixelSize * phi,
+    pixelSize * phi
+  );
+  context.strokeRect(
+    ((size.x / 2) + pixelSize + (pixelSize / phi)),
+    size.y / 2,
+    pixelSize * Math.pow(phi, 2),
+    pixelSize * Math.pow(phi, 2)
+  );
+  context.strokeRect(
+    size.x / 2,
+    (size.y / 2) - ((pixelSize * phi) + (pixelSize * Math.pow(phi, 2))),
+    pixelSize * Math.pow(phi, 3),
+    pixelSize * Math.pow(phi, 3)
+  );
+  context.strokeRect(
+    (size.x / 2) - pixelSize * Math.pow(phi, 4),
+    (size.y / 2) - pixelSize * Math.pow(phi, 3),
+    pixelSize * Math.pow(phi, 4),
+    pixelSize * Math.pow(phi, 4)
+  );
+  context.strokeRect(
+    (size.x / 2) - (pixelSize * Math.pow(phi, 4)),
+    (size.y / 2) + pixelSize * Math.pow(phi, 2),
+    pixelSize * Math.pow(phi, 5),
+    pixelSize * Math.pow(phi, 5)
+  );
+  context.strokeRect(
+    (size.x / 2) + pixelSize * Math.pow(phi, 3),
+    (size.y / 2) - pixelSize * Math.pow(phi, 3),
+    pixelSize * Math.pow(phi, 6),
+    pixelSize * Math.pow(phi, 6)
+  );
+  context.strokeRect(
+    (size.x / 2) - pixelSize * Math.pow(phi, 4),
+    (size.y / 2) - (pixelSize * Math.pow(phi, 7) + pixelSize * Math.pow(phi, 3)),
+    pixelSize * Math.pow(phi, 7),
+    pixelSize * Math.pow(phi, 7)
+  );
+  context.strokeRect(
+    (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
+    (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
+    pixelSize * Math.pow(phi, 8),
+    pixelSize * Math.pow(phi, 8)
+  );
+  context.strokeRect(
+    (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
+    (size.y / 2) + (pixelSize * Math.pow(phi, 2) + pixelSize * Math.pow(phi, 5)),
+    pixelSize * Math.pow(phi, 9),
+    pixelSize * Math.pow(phi, 9)
+  );
+  context.strokeRect(
+    (size.x / 2) + (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 6)),
+    (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
+    pixelSize * Math.pow(phi, 10),
+    pixelSize * Math.pow(phi, 10)
+  );
+}
+function spirals () {
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + pixelSize,
+    (size.y / 2) + pixelSize,
+    pixelSize,
+    3 * Math.PI / 2,
+    Math.PI,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + pixelSize + (pixelSize / phi),
+    (size.y / 2) + pixelSize,
+    pixelSize * phi,
+    Math.PI,
+    Math.PI / 2,
+    true
+  );
+  context.stroke();
+  context.beginPath();
+  context.arc(
+    (size.x / 2) + (2 * pixelSize / phi),
+    (size.y / 2),
+    pixelSize * Math.pow(phi, 2),
+    Maht.PI / 2,
+    0,
+    true
+  );
+  context.stroke();
+}
   //////////////////
   /// END SPIRAL ///
   //////////////////
@@ -216,99 +442,98 @@ function fibSpiral () {
   /// SUNFLOWER SPIRAL ///
   ////////////////////////
 
-  function sunflower (frameNumber) {
-    context.clearRect(0, 0, size.x, size.y);
-    drawBorder();
-    /**
-     * will aid in determining area of circles
-     * smaller numbers yields smaller circles as cirlces move inward
-     */
-    var deviation = 6 / 7;
+function sunflower (frameNumber) {
+  context.clearRect(0, 0, size.x, size.y);
+  drawBorder();
+  /**
+   * will aid in determining area of circles
+   * smaller numbers yields smaller circles as cirlces move inward
+   */
+  var deviation = 6 / 7;
 
-    /**
-     * aid in determining amount/size of circles
-     * higher numbers yield smaller/more circles
-     */
-    var circles = 1000;
+  /**
+   * aid in determining amount/size of circles
+   * higher numbers yield smaller/more circles
+   */
+  var circles = 1000;
 
-    // golden ratio
-    var phi = (Math.sqrt(5) + 1) / 2 - 1;
-    // golden angle
-    var goldenAng = phi * 2 * Math.PI;
+  // golden ratio
+  var phi = (Math.sqrt(5) + 1) / 2;
+  // golden angle
+  var goldenAng = phi * 2 * Math.PI;
 
-    // set max radius
-    var lrgRadius = size.x * 0.45;
-    // set area for large circles
-    var lrgArea = Math.pow(lrgRadius, 2) * Math.PI;
+  // set max radius
+  var lrgRadius = size.x * 0.45;
+  // set area for large circles
+  var lrgArea = Math.pow(lrgRadius, 2) * Math.PI;
 
-    // define an average area
-    var avgArea = lrgArea / circles;
+  // define an average area
+  var avgArea = lrgArea / circles;
 
-    // define a min and max area
-    var minArea = avgArea * (1 - deviation);
-    var maxArea = avgArea * (1 + deviation);
+  // define a min and max area
+  var minArea = avgArea * (1 - deviation);
+  var maxArea = avgArea * (1 + deviation);
 
-    // define an area
-    var area = 0;
+  // define an area
+  var area = 0;
 
-    // factor to account for empty space
-    var spaceFactor = 0.87;
+  // factor to account for empty space
+  var spaceFactor = 0.87;
 
-    // define central x/y coordinates
-    var centerX = size.x / 2;
-    var centerY = size.y / 2;
+  // define central x/y coordinates
+  var centerX = size.x / 2;
+  var centerY = size.y / 2;
 
-    // define incrimentation for hue
-    var hueIncr = frameNumber * 0.0002 + 0.1;
-    var angleOffset = frameNumber * 0.01;
+  // define incrimentation for hue
+  var hueIncr = frameNumber * 0.0002 + 0.1;
+  var angleOffset = frameNumber * 0.01;
 
-    // loop to create circles in spiral
-    for (var i = 1; i <= circles; i++) {
-      context.beginPath();
+  // loop to create circles in spiral
+  for (var i = 1; i <= circles; i++) {
+    context.beginPath();
 
-      // aids in determining decreasing circle area
-      var ratio = i / circles;
-      // define area for smallest circles
-      var smArea = minArea + ratio * (maxArea - minArea);
-      // define radius for smallest circles
-      var smRadius = Math.sqrt(smArea / Math.PI);
+    // aids in determining decreasing circle area
+    var ratio = i / circles;
+    // define area for smallest circles
+    var smArea = minArea + ratio * (maxArea - minArea);
+    // define radius for smallest circles
+    var smRadius = Math.sqrt(smArea / Math.PI);
 
-      // determines area for all circles
-      area += smArea;
+    // determines area for all circles
+    area += smArea;
 
-      // defines radius for spiral
-      var spiralRadius = Math.sqrt(area / Math.PI);
-      // defines x/y coordinates for circles along a curve
-      var x = centerX + Math.cos(i * goldenAng + angleOffset) * spiralRadius;
-      var y = centerY + Math.sin(i * goldenAng + angleOffset) * spiralRadius;
+    // defines radius for spiral
+    var spiralRadius = Math.sqrt(area / Math.PI);
+    // defines x/y coordinates for circles along a curve
+    var x = centerX + Math.cos(i * goldenAng + angleOffset) * spiralRadius;
+    var y = centerY + Math.sin(i * goldenAng + angleOffset) * spiralRadius;
 
-      // set alternating hue
-      var hue = hueIncr * i;
-      hue -= Math.floor(hue);
-      hue *= 360;
+    // set alternating hue
+    var hue = hueIncr * i;
+    hue -= Math.floor(hue);
+    hue *= 360;
 
-      context.fillStyle = 'hsl(' + hue + ', 80%, 50%)';
+    context.fillStyle = 'hsl(' + hue + ', 80%, 50%)';
 
-      // draw the circles
-      context.arc(
-        x,
-        y,
-        smRadius * spaceFactor,
-        0,
-        2 * Math.PI,
-        false
-      );
-      // fill the circles
-      context.fill();
-      // setInterval(
-      //   function () {
-      //     context.
-      //   },
-      // 1000);
-    }
-
+    // draw the circles
+    context.arc(
+      x,
+      y,
+      smRadius * spaceFactor,
+      0,
+      2 * Math.PI,
+      false
+    );
+    // fill the circles
+    context.fill();
   }
+}
 
+function sunflowerFrame () {
+  incriment+= 0.1;
+  sunflower(incriment);
+  window.requestAnimationFrame(sunflowerFrame);
+}
   /////////////////////
   /// END SUNFLOWER ///
   /////////////////////
@@ -328,8 +553,9 @@ var orangeButton = document.getElementById('orange');
 var clearButton = document.getElementById('clear');
 var randomButton = document.getElementById('random');
 var fibButton = document.getElementById('fib');
-var spiralButton = document.getElementById('fibSpiral');
+var torusButton = document.getElementById('torus');
 var sunflowerButton = document.getElementById('sunflower');
+var spiralButton = document.getElementById('fibSpiral');
 
 // ----------------- //
 // ** END BUTTONS ** //
@@ -409,15 +635,20 @@ fibButton.onclick = function () {
   drawFibonacci();
 };
 
+// torus spiral
+torusButton.onclick = function () {
+  console.log('test')
+  torus();
+};
+
 // fibonacci spiral
 spiralButton.onclick = function () {
-  console.log('test')
   fibSpiral();
 };
 
 // fibonacci spiral in nature
 sunflowerButton.onclick = function () {
-  sunflower(144);
+  sunflowerFrame();
 };
 
 // clear canvas
