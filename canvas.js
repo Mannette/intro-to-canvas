@@ -299,14 +299,9 @@ function findCoordinates (circles, i) {
 function fibSpiral (frameNumber) {
   context.clearRect(0, 0, size.x, size.y);
   drawBorder();
-  context.fillStyle = '#000000';
-  var centerX = size.x / 2;
-  var centerY = size.y / 2;
-  var phi = (Math.sqrt(5) + 1) / 2;
-  var cotB = (Math.log(phi)) / (Math.PI / 2);
+
 
   fibSquares();
-  // fillSquares();
   spirals();
 }
 
@@ -388,86 +383,6 @@ function fibSquares () {
     pixelSize * Math.pow(phi, 10)
   );
 }
-
-// function fillSquares () {
-//   context.fillStyle = '#4a67ff';
-//   var phi = (Math.sqrt(5) + 1) / 2;
-//
-//   context.fillRect(
-//     (size.x / 2) + pixelSize,
-//     size.y / 2,
-//     pixelSize / phi,
-//     pixelSize
-//   );
-//   context.fillRect(
-//     size.x / 2,
-//     size.y / 2,
-//     pixelSize,
-//     pixelSize
-//   );
-//   context.fillRect(
-//     size.x / 2,
-//     (size.y / 2) + pixelSize,
-//     pixelSize * phi,
-//     pixelSize * phi
-//   );
-//   context.fillRect(
-//     ((size.x / 2) + pixelSize + (pixelSize / phi)),
-//     size.y / 2,
-//     pixelSize * Math.pow(phi, 2),
-//     pixelSize * Math.pow(phi, 2)
-//   );
-//   context.fillRect(
-//     size.x / 2,
-//     (size.y / 2) - ((pixelSize * phi) + (pixelSize * Math.pow(phi, 2))),
-//     pixelSize * Math.pow(phi, 3),
-//     pixelSize * Math.pow(phi, 3)
-//   );
-//   context.fillRect(
-//     (size.x / 2) - pixelSize * Math.pow(phi, 4),
-//     (size.y / 2) - pixelSize * Math.pow(phi, 3),
-//     pixelSize * Math.pow(phi, 4),
-//     pixelSize * Math.pow(phi, 4)
-//   );
-//   context.fillRect(
-//     (size.x / 2) - (pixelSize * Math.pow(phi, 4)),
-//     (size.y / 2) + pixelSize * Math.pow(phi, 2),
-//     pixelSize * Math.pow(phi, 5),
-//     pixelSize * Math.pow(phi, 5)
-//   );
-//   context.fillRect(
-//     (size.x / 2) + pixelSize * Math.pow(phi, 3),
-//     (size.y / 2) - pixelSize * Math.pow(phi, 3),
-//     pixelSize * Math.pow(phi, 6),
-//     pixelSize * Math.pow(phi, 6)
-//   );
-//   context.fillRect(
-//     (size.x / 2) - pixelSize * Math.pow(phi, 4),
-//     (size.y / 2) - (pixelSize * Math.pow(phi, 7) + pixelSize * Math.pow(phi, 3)),
-//     pixelSize * Math.pow(phi, 7),
-//     pixelSize * Math.pow(phi, 7)
-//   );
-//   context.fillRect(
-//     (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
-//     (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
-//     pixelSize * Math.pow(phi, 8),
-//     pixelSize * Math.pow(phi, 8)
-//   );
-//   context.fillRect(
-//     (size.x / 2) - (pixelSize * Math.pow(phi, 4) + pixelSize * Math.pow(phi, 8)),
-//     (size.y / 2) + (pixelSize * Math.pow(phi, 2) + pixelSize * Math.pow(phi, 5)),
-//     pixelSize * Math.pow(phi, 9),
-//     pixelSize * Math.pow(phi, 9)
-//   );
-//   context.fillRect(
-//     (size.x / 2) + (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 6)),
-//     (size.y / 2) - (pixelSize * Math.pow(phi, 3) + pixelSize * Math.pow(phi, 7)),
-//     pixelSize * Math.pow(phi, 10),
-//     pixelSize * Math.pow(phi, 10)
-//   );
-// }
-
-//
 
 function spirals () {
   var phi = (Math.sqrt(5) + 1) / 2;
@@ -801,10 +716,16 @@ function sunflower (frameNumber) {
   }
 }
 
+var counter = 0
 function sunflowerFrame () {
   incriment+= 0.1;
   sunflower(incriment);
-  window.requestAnimationFrame(sunflowerFrame);
+  if (counter < 2000) {
+    window.requestAnimationFrame(sunflowerFrame);
+    counter++;
+  } else if (counter >= 2000){
+    window.cancelAnimationFrame(sunflowerFrame);
+  }
 }
   /////////////////////
   /// END SUNFLOWER ///
