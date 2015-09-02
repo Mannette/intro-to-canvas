@@ -169,12 +169,13 @@ function drawFibonacci () {
   /// FIBONACCI DOTS ///
   //////////////////////
 function fibDots () {
+  context.fillStyle = "#000000";
   var phi = (Math.sqrt(5) +1) / 2;
   var goldenAng = phi * 2 * Math.PI;
-  var circles = 200;
+  var circles = 500;
 
   var largeRad = size.x * 0.45;
-  var smallRad = pixelSize;
+  var smallRad = 2;
   var centerX = size.x / 2;
   var centerY = size.y / 2;
 
@@ -204,13 +205,13 @@ function fibDots () {
   ////////////////////
 
 function torus () {
-  context.clearRect(0, 0, size.x, size.y);
+  // context.clearRect(0, 0, size.x, size.y);
   drawBorder();
   context.strokeStyle = '#000000';
   context.fillStyle = '#000000';
 
   // define number of circles
-  var circles = 600;
+  var circles = 500;
 
   // define golden ratio and angle
   var phi = (Math.sqrt(5) + 1) / 2;
@@ -253,14 +254,14 @@ function torus () {
 
     context.beginPath();
     context.moveTo(startPoint.x, startPoint.y);
-    context.arc(
-      startPoint.x,
-      startPoint.y,
-      2,
-      0,
-      2 * Math.PI,
-      true
-    );
+    // context.arc(
+    //   startPoint.x,
+    //   startPoint.y,
+    //   2,
+    //   0,
+    //   2 * Math.PI,
+    //   true
+    // );
     context.lineTo(endPoint.x, endPoint.y);
     context.stroke();
     // context.fill();
@@ -336,7 +337,7 @@ function fibSquares () {
   );
   context.strokeRect(
     size.x / 2,
-    (size.y / 2) - ((pixelSize * phi) + (pixelSize * Math.pow(phi, 2))),
+    (size.y / 2) - (pixelSize * Math.pow(phi, 3)),
     pixelSize * Math.pow(phi, 3),
     pixelSize * Math.pow(phi, 3)
   );
@@ -642,7 +643,7 @@ function sunflower (frameNumber) {
    * aid in determining amount/size of circles
    * higher numbers yield smaller/more circles
    */
-  var circles = 1000;
+  var circles = 2500;
 
   // golden ratio
   var phi = (Math.sqrt(5) + 1) / 2;
@@ -716,14 +717,15 @@ function sunflower (frameNumber) {
   }
 }
 
-var counter = 0
+// var counter = 0
 function sunflowerFrame () {
   incriment+= 0.1;
   sunflower(incriment);
-  if (counter < 2000) {
+  if (counter < 10000) {
     window.requestAnimationFrame(sunflowerFrame);
     counter++;
-  } else if (counter >= 2000){
+    console.log(counter);
+  } else {
     window.cancelAnimationFrame(sunflowerFrame);
   }
 }
@@ -841,6 +843,7 @@ spiralButton.onclick = function () {
 
 // fibonacci spiral in nature
 sunflowerButton.onclick = function () {
+  counter = 0;
   sunflowerFrame();
 };
 
