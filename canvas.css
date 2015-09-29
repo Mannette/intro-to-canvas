@@ -2,9 +2,7 @@
    width: 100%;
    text-align:center;
    position: relative;
-   top: 50%;
-   transform: translateY(50%);
-
+   top: 0;
 }
 
 canvas {
@@ -12,16 +10,4 @@ canvas {
 }
 button {
   width: 100px;
-}
-#red {
-  background-color: red;
-}
-#green {
-  background-color: green;
-}
-#blue {
-  background-color: blue;
-}
-#orange {
-  background-color: orange;
 }

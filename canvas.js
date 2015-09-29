@@ -20,100 +20,6 @@ function getRandomColor () {
   return color;
 }
 
-// adds blue box in top left on single click
-canvas.onclick = function () {
-  context.fillStyle = 'blue';
-  context.fillRect(0, 0, (size.x / 4), (size.y / 4));
-};
-
-// adds red box in bottom right corner
-canvas.ondblclick = function () {
-  context.fillStyle = 'red';
-  context.fillRect((size.x / 1.34), (size.y / 1.34), (size.x / 4), (size.y / 4));
-};
-
-// ------ //
-// SHAPES //
-// ------ //
-
-// creates rectangles
-function rectangles () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  // for (var i = 1; i > 0; i -= 0.1) {
-  //   console.log(i);
-  //   return i;
-  // }
-
-  context.fillStyle = getRandomColor();
-  context.fillRect(randomX, randomY, randomWidth, randomHeight);
-}
-
-// creates circles
-function circles () {
-  var randomCenterX = Math.floor(Math.random() * size.x);
-  var randomCenterY = Math.floor(Math.random() * size.y);
-  var randomSize = Math.floor(Math.random() * 100);
-
-  context.beginPath();
-  context.arc(
-    randomCenterX, // x coordinate
-    randomCenterY, // y coordinate
-    randomSize, // radius
-    0, //
-    2 * Math.PI // radians
-  );
-  context.fillStyle = getRandomColor();
-  context.fill();
-}
-
-// creates triangles
-function triangles () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  var firstVrtxX = Math.floor(Math.random() * size.x);
-  var firstVrtxY = Math.floor(Math.random() * size.y);
-  var secondVrtxX = Math.floor(Math.random() * size.x);
-  var secondVrtxY = Math.floor(Math.random() * size.y);
-
-  context.beginPath();
-  context.moveTo(randomX, randomY);
-  context.lineTo(firstVrtxX, firstVrtxY);
-  context.lineTo(secondVrtxX, secondVrtxY);
-  context.closePath();
-
-  context.fillStyle = getRandomColor();
-  context.fill();
-}
-// creates diamonds
-function diamonds () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  var firstVrtxX = Math.floor(Math.random() * size.x);
-  var firstVrtxY = Math.floor(Math.random() * size.y);
-  var secondVrtxX = Math.floor(Math.random() * size.x);
-  var secondVrtxY = Math.floor(Math.random() * size.y);
-  var thirdVrtxX = Math.floor(Math.random() * size.x);
-  var thirdVrtxY = Math.floor(Math.random() * size.y);
-
-  context.beginPath();
-  context.moveTo(randomX, randomY);
-  context.lineTo(firstVrtxX, firstVrtxY);
-  context.lineTo(secondVrtxX, secondVrtxY);
-  context.lineTo(thirdVrtxX, thirdVrtxY);
-  context.closePath();
-
-  context.fillStyle = getRandomColor();
-  context.fill();
-}
-
-// ---------------- //
-// ** END SHAPES ** //
-// ---------------- //
-
 // ------------------- //
 // FIBONACCI FUNCTIONS //
 // ------------------- //
@@ -231,40 +137,16 @@ function torus () {
 
   function loop (i) {
     i = toIncrease++;
-    // var ratio = i / circles;
-    // var angle = i * goldenAng;
-    // var spiralRadius = ratio * outerRadius;
-    // var x = centerX + Math.cos(angle) * spiralRadius;
-    // var y = centerY + Math.sin(angle) * spiralRadius;
+
     var startPoint = findCoordinates(circles, i);
     var endPoint = findCoordinates(circles, i+1);
 
-    // console.log(startPoint);
-    // console.log(endPoint);
-    //
-    // context.beginPath();
-    // context.arc(
-    //   x,
-    //   y,
-    //   2,
-    //   0,
-    //   2 * Math.PI
-    // );
-    // context.fill();
 
     context.beginPath();
     context.moveTo(startPoint.x, startPoint.y);
-    // context.arc(
-    //   startPoint.x,
-    //   startPoint.y,
-    //   2,
-    //   0,
-    //   2 * Math.PI,
-    //   true
-    // );
+
     context.lineTo(endPoint.x, endPoint.y);
     context.stroke();
-    // context.fill();
     if (i > circles) {
       clearInterval(test);
     }
@@ -741,12 +623,8 @@ function sunflowerFrame () {
 // BUTTONS //
 // ------- //
 
-var redButton = document.getElementById('red');
-var greenButton = document.getElementById('green');
-var blueButton = document.getElementById('blue');
-var orangeButton = document.getElementById('orange');
+
 var clearButton = document.getElementById('clear');
-var randomButton = document.getElementById('random');
 var fibButton = document.getElementById('fib');
 var torusButton = document.getElementById('torus');
 var sunflowerButton = document.getElementById('sunflower');
@@ -764,65 +642,6 @@ var dotsButton = document.getElementById('dots');
 // randomly generated coordinates and size
 // must fire on each click
 var randomX, randomY, randomWidth, randomHeight;
-
-// creates red rectangle
-redButton.onclick = function () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  context.fillStyle = 'red';
-  context.fillRect(randomX, randomY, randomWidth, randomHeight);
-};
-
-// creates green rectangle
-greenButton.onclick = function () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  context.fillStyle = 'green';
-  context.fillRect(randomX, randomY, randomWidth, randomHeight);
-};
-
-// creates blue rectangle
-blueButton.onclick = function () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  context.fillStyle = 'blue';
-  context.fillRect(randomX, randomY, randomWidth, randomHeight);
-};
-
-// creates orange rectangle
-orangeButton.onclick = function () {
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  context.fillStyle = 'orange';
-  context.fillRect(randomX, randomY, randomWidth, randomHeight);
-};
-
-// randomly creates cirlces/rectangles
-randomButton.onclick = function () {
-  var shape = Math.floor(Math.random() * 2);
-  randomX = Math.floor(Math.random() * size.x);
-  randomY = Math.floor(Math.random() * size.y);
-  randomWidth = Math.floor(Math.random() * (size.x / 2));
-  randomHeight = Math.floor(Math.random() * (size.y / 2));
-
-  if (shape === 1) {
-    circles();
-  } else {
-    rectangles();
-  }
-};
 
 // fibonacci sequence
 fibButton.onclick = function () {
@@ -860,45 +679,4 @@ clearButton.onclick = function () {
 
 // ---------------------- //
 // ** END CLICK EVENTS ** //
-// ---------------------- //
-
-// ------------ //
-// KEY BINDINGS //
-// ------------ //
-
-// r keycode = 82
-// c keycode = 67
-// t keycode = 84
-// d keycode = 68
-document.onkeydown = function (e) {
-  e = e || window.event;
-  switch (e.which || e.keyCode) {
-
-    // draws rectangle
-    case 82:
-      rectangles();
-      break;
-
-    // draws circle
-    case 67:
-      circles();
-      break;
-
-    // draws triangle
-    case 84:
-      triangles();
-      break;
-
-    // draws diamond
-    case 68:
-      diamonds();
-      break;
-
-    default: return;
-  }
-  e.preventDefault();
-};
-
-// ---------------------- //
-// ** END KEY BINDINGS ** //
 // ---------------------- //
